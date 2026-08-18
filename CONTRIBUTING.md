@@ -30,6 +30,15 @@ uv run main.py
 
 ```
 
+1. **Run the tests** to make sure your environment is set up correctly:
+
+```bash
+uv run pytest
+
+```
+
+All tests should pass. If they don't, check the Issues tab or ask for help before proceeding.
+
 ## 💡 How You Can Help
 
 There are several ways you can level up Crossword. Here are the most common ways to contribute:
@@ -75,6 +84,16 @@ git commit -m "Add: New 10x10 Sci-Fi puzzle pack"
 
 ```
 
+1. **Run the tests and linter** before pushing:
+
+```bash
+uv run pytest
+uv run ruff check .
+
+```
+
+Make sure all tests pass and there are no linting errors. If you're adding a new feature or fixing a bug, please include tests for your changes.
+
 1. **Push to your fork:**
 
 ```bash
@@ -89,6 +108,13 @@ git push origin feature/your-amazing-feature
 * **Keep it modular:** Respect the project layout. UI/Game logic stays in `main.py`, configurations belong in `settings.py`, and data goes in `puzzles.py`.
 * **Performance matters:** Crossword is built for speed. Avoid blocking the main `CustomTkinter` event loop with heavy synchronous tasks.
 * **Be kind:** We're all here to build something fun. Be respectful in your issue reports and code reviews.
+
+## 🧪 Testing
+
+* Tests live in the `test/` directory.
+* Run all tests with `uv run pytest`.
+* New features and bugfixes should include tests where applicable.
+* **All tests must pass before a PR is merged.** If your PR breaks existing tests, please fix them before requesting a review.
 
 ---
 
