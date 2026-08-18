@@ -1,12 +1,16 @@
 # 🧩 Crossword Game
 
-**Crossword** is the experience you've been waiting for.
+**Crossword** is the experience you've been waiting for 🤣.
 
 Tired of boring, clunky crossword interfaces? We get it. It's a sleek, modern, and high-performance desktop game built with Python and `CustomTkinter`. It's got a dark-mode-first design, smooth keyboard navigation, and it's fast—just like the engine powering it.
+
+---
 
 ## ⚡ Powered by Speed
 
 Life is too short for slow package managers. That's why **Crossword** uses [uv](https://astral.sh/uv/) for lightning-fast dependency management.
+
+---
 
 ## ✨ Why You'll Love It
 
@@ -15,25 +19,29 @@ Life is too short for slow package managers. That's why **Crossword** uses [uv](
 * **Instant Gratification:** Get real-time color-coded feedback on your answers. No more guessing if you're right!
 * **Modular Magic:** The code is split up (logic, UI, settings, puzzles, main), making it super easy to add your own themes or levels.
 
+---
+
 ## 🛠️ Get Up and Running (in seconds!)
 
 First, make sure you have [uv](https://docs.astral.sh/uv/getting-started/installation/) installed. Once you have it, setting up the game is a breeze:
 
-1. **Clone the repo** (or download the files) and jump into the project folder.
+- **Clone the repo** (or download the files) and jump into the project folder.
 
-2. **Sync the project** (this handles everything):
+- **Sync the project** (this handles everything):
 
    ```bash
    uv sync
    ```
 
-3. **Game on!** Run the game instantly:
+- **Game on!** Run the game instantly:
 
    ```bash
    uv run main.py
    ```
 
 * *(That's it. You're ready to start solving.)*
+
+---
 
 ## 📁 Project Layout
 
@@ -63,12 +71,16 @@ crossword/
 └── .python-version
 ```
 
+---
+
 ## 🎮 How to Play
 
 * **Click or Tab** to select your cell.
 * **Type** to fill in the grid.
 * **Escape** toggles your direction (Across/Down).
 * **Check Answers** when you're feeling confident (or just desperate!).
+
+---
 
 ## 📸 Screenshots of the Crossword Game
 
@@ -85,9 +97,3 @@ crossword/
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 💻 Happy coding
-
-*Built with love, Python, and the speed of light (thanks, uv).*
