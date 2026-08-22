@@ -43,36 +43,6 @@ First, make sure you have [uv](https://docs.astral.sh/uv/getting-started/install
 
 ---
 
-## 📁 Project Layout
-
-```text
-crossword/
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── bug_report.md
-│   │   ├── feature_request.md
-│   │   └── puzzle_submission.md
-│   ├── pull_request_template.md
-│   └── SECURITY.md
-├── images/                 # Screenshots (Screenshot-1.png, Screenshot-2.png)
-├── test/                   # Pytest suite (conftest.py, test_main.py, test_puzzles.py, test_settings.py)
-├── .gitignore     
-├── .python-version       
-├── CODE_OF_CONDUCT.md                 
-├── CONTRIBUTING.md               
-├── crossword_logic.py      # Game engine / solving logic        
-├── crossword_ui.py         # CustomTkinter interface      
-├── LICENSE                
-├── main.py                 # Entry point
-├── puzzles.py              # Puzzle data
-├── pyproject.toml          # uv project config & dependencies
-├── README.md 
-├── settings.py             # Config / themes
-└── uv.lock                 # Locked dependency versions
-```
-
----
-
 ## 🎮 How to Play
 
 * **Click or Tab** to select your cell.
@@ -91,6 +61,12 @@ crossword/
 * Screenshot of a completed game
 
 ![Screenshot-2](images/Screenshot-2.png)
+
+---
+
+## 🤝 Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
 
 ---
 
