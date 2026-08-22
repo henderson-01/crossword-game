@@ -1,6 +1,6 @@
 # 🧩 Crossword Game
 
-**Crossword** is the experience you've been waiting for 🤣.
+**Crossword** is the experience you may have been waiting for!
 
 Tired of boring, clunky crossword interfaces? We get it. It's a sleek, modern, and high-performance desktop game built with Python and `CustomTkinter`. It's got a dark-mode-first design, smooth keyboard navigation, and it's fast—just like the engine powering it.
 
@@ -52,23 +52,23 @@ crossword/
 │   │   ├── bug_report.md
 │   │   ├── feature_request.md
 │   │   └── puzzle_submission.md
-│   └── pull_request_template.md
+│   ├── pull_request_template.md
+│   └── SECURITY.md
 ├── images/                 # Screenshots (Screenshot-1.png, Screenshot-2.png)
 ├── test/                   # Pytest suite (conftest.py, test_main.py, test_puzzles.py, test_settings.py)
-├── crossword_logic.py      # Game engine / solving logic
-├── crossword_ui.py         # CustomTkinter interface
+├── .gitignore     
+├── .python-version       
+├── CODE_OF_CONDUCT.md                 
+├── CONTRIBUTING.md               
+├── crossword_logic.py      # Game engine / solving logic        
+├── crossword_ui.py         # CustomTkinter interface      
+├── LICENSE                
 ├── main.py                 # Entry point
 ├── puzzles.py              # Puzzle data
-├── settings.py             # Config / themes
 ├── pyproject.toml          # uv project config & dependencies
-├── uv.lock                 # Locked dependency versions
-├── README.md
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
-├── SECURITY.md
-├── LICENSE
-├── .gitignore
-└── .python-version
+├── README.md 
+├── settings.py             # Config / themes
+└── uv.lock                 # Locked dependency versions
 ```
 
 ---
