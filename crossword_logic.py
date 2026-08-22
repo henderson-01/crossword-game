@@ -1,3 +1,18 @@
+""" Crossword Logic
+
+Core game logic for the crossword application. The CrosswordLogic class manages
+puzzle state, cell navigation, direction toggling, keyboard input, and answer
+validation. Designed to be combined with a UI mixin CrosswordUI that provides
+_build_grid() and _populate_clues() at runtime.
+
+Responsibilities:
+  - Loading and resetting puzzles grid, clues, UI state
+  - Navigating between cells typing, backspace, arrow keys, Enter, Escape
+  - Highlighting the active word and its corresponding clue
+  - Toggling between Across and Down direction
+  - Validating user answers against the puzzle solution
+"""
+
 import tkinter as tk
 from typing import TYPE_CHECKING, Any, Literal
 
