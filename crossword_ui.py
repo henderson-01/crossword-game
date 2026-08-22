@@ -1,3 +1,14 @@
+""" Crossword UI User Interface Mixin
+
+Provides the CrosswordUI mixin responsible for constructing the entire
+crossword interface: a top bar puzzle selector, grid panel clue
+banner, interactive cell grid, controls, and a clues panel Across
+and Down lists.
+
+When combined with CrosswordLogic via multiple inheritance, this class
+supplies _build_grid() and _populate_clues() at runtime.
+"""
+
 import tkinter as tk
 from typing import TYPE_CHECKING, Any
 
