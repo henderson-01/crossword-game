@@ -1,3 +1,10 @@
+""" Crossword Game Application Entry Point
+
+Wires together CrosswordLogic and CrosswordUI into the CrosswordGame
+root window. Configures the Tkinter application title, geometry, dark
+theme, initializes state, and starts the event loop.
+"""
+
 from __future__ import annotations
 
 import tkinter as tk
