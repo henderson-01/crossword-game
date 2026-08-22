@@ -1,3 +1,10 @@
+""" Crossword Puzzle Data
+
+Contains the PUZZLES list a collection of mini-crossword definitions.
+Each puzzle includes a grid layout W = white cell, B = black cell,
+the solution, and across/down clues with numbers and text.
+"""
+
 PUZZLES = [
     {
         "name": "1. General Knowledge",
