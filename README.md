@@ -66,7 +66,11 @@ First, make sure you have [uv](https://docs.astral.sh/uv/getting-started/install
 
 ## 🤝 Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
+Want to help make Crossword even better? You're in the right place.
+
+Whether you're adding puzzle packs, fixing bugs, or proposing new features — we welcome it. Check out our full [Contributing Guide](CONTRIBUTING.md) for setup steps, coding standards, and the PR process.
+
+**Quick start:** `uv sync && uv run pytest` — if all tests pass, you're ready to go.
 
 ---
 
