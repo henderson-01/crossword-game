@@ -1,3 +1,10 @@
+""" Application Settings
+
+Constants for the crossword application: app title, window geometry,
+and a dark-mode color palette backgrounds, highlights, text, and
+answer feedback colors.
+"""
+
 APP_TITLE = "Crossword Premium"
 WINDOW_GEOMETRY = "1100x750"
 WINDOW_MIN_SIZE = (900, 600)
