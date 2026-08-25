@@ -119,7 +119,7 @@ PUZZLES = [
         },
     },
     {
-        "name": "5. Food & Drink",
+        "name": "5. Mixed bag (1)",
         "grid": [
             ["W", "W", "W", "W", "W"],
             ["W", "B", "B", "B", "W"],
@@ -147,7 +147,7 @@ PUZZLES = [
         },
     },
     {
-        "name": "6. Places",
+        "name": "6. Mixed Bag (2)",
         "grid": [
             ["W", "W", "W", "W", "W"],
             ["W", "B", "B", "B", "W"],
@@ -259,7 +259,7 @@ PUZZLES = [
         },
     },
     {
-        "name": "10. Mixed Bag",
+        "name": "10. Mixed Bag (3)",
         "grid": [
             ["W", "W", "W", "W", "W"],
             ["W", "B", "B", "B", "W"],
