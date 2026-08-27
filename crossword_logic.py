@@ -98,17 +98,30 @@ class CrosswordLogic:
         if not self.current_cell:
             return
 
-        r, c = self.current_cell
-        puzzle = PUZZLES[self.current_puzzle_idx]
-        rows = len(puzzle["grid"])
-        cols = len(puzzle["grid"][0])
+        self._reset_all_highlights()
 
+        r, c = self.current_cell
+        start_r, start_c, end_r, end_c = self._get_word_bounds(r, c)
+
+        word_cells = self._get_word_cells(start_r, start_c, end_r, end_c)
+        self._highlight_cells(word_cells, COLORS["word_hl"])
+
+        self.grid_cells[(r, c)]["frame"].configure(fg_color=COLORS["cell_hl"])
+
+        self._update_active_clue(start_r, start_c)
+
+    def _reset_all_highlights(self) -> None:
         for cell_data in self.grid_cells.values():
             cell_data["frame"].configure(fg_color=COLORS["cell_empty"])
 
         for d in ["H", "V"]:
             for btn in self.clue_btns[d].values():
                 btn.configure(fg_color="transparent", text_color=COLORS["text_main"])
+
+    def _get_word_bounds(self, r: int, c: int) -> tuple[int, int, int, int]:
+        puzzle = PUZZLES[self.current_puzzle_idx]
+        rows = len(puzzle["grid"])
+        cols = len(puzzle["grid"][0])
 
         start_r, start_c = r, c
         end_r, end_c = r, c
@@ -118,24 +131,33 @@ class CrosswordLogic:
                 start_c -= 1
             while end_c < cols - 1 and puzzle["grid"][r][end_c + 1] != "B":
                 end_c += 1
-            for col in range(start_c, end_c + 1):
-                if (r, col) in self.grid_cells:
-                    self.grid_cells[(r, col)]["frame"].configure(
-                        fg_color=COLORS["word_hl"]
-                    )
         else:
             while start_r > 0 and puzzle["grid"][start_r - 1][c] != "B":
                 start_r -= 1
             while end_r < rows - 1 and puzzle["grid"][end_r + 1][c] != "B":
                 end_r += 1
+
+        return start_r, start_c, end_r, end_c
+
+    def _get_word_cells(
+        self, start_r: int, start_c: int, end_r: int, end_c: int
+    ) -> list[tuple[int, int]]:
+        cells = []
+        if self.current_direction == "H":
+            for col in range(start_c, end_c + 1):
+                if (start_r, col) in self.grid_cells:
+                    cells.append((start_r, col))
+        else:
             for row in range(start_r, end_r + 1):
-                if (row, c) in self.grid_cells:
-                    self.grid_cells[(row, c)]["frame"].configure(
-                        fg_color=COLORS["word_hl"]
-                    )
+                if (row, start_c) in self.grid_cells:
+                    cells.append((row, start_c))
+        return cells
 
-        self.grid_cells[(r, c)]["frame"].configure(fg_color=COLORS["cell_hl"])
+    def _highlight_cells(self, cells: list[tuple[int, int]], color: str) -> None:
+        for cell in cells:
+            self.grid_cells[cell]["frame"].configure(fg_color=color)
 
+    def _update_active_clue(self, start_r: int, start_c: int) -> None:
         clue_num = self.clue_number_map.get((start_r, start_c))
 
         if clue_num and clue_num in self.clue_texts[self.current_direction]:
@@ -242,36 +264,33 @@ class CrosswordLogic:
     def check_answers(self) -> None:
         puzzle = PUZZLES[self.current_puzzle_idx]
         correct_count = 0
-        total_white_cells = 0
+        total_white_cells = len(self.grid_cells)
         total_filled_cells = 0
 
         for cell_data in self.grid_cells.values():
             cell_data["frame"].configure(fg_color=COLORS["cell_empty"])
 
-        for r in range(len(puzzle["grid"])):
-            for c in range(len(puzzle["grid"][0])):
-                if puzzle["grid"][r][c] == "B":
-                    continue
+        for (r, c), cell_data in self.grid_cells.items():
+            expected = puzzle["solution"][r][c].upper()
+            user_char = cell_data["entry"].get().upper()
 
-                total_white_cells += 1
-                expected = puzzle["solution"][r][c].upper()
+            if user_char == "":
+                continue
 
-                if (r, c) in self.grid_cells:
-                    user_char = self.grid_cells[(r, c)]["entry"].get().upper()
+            total_filled_cells += 1
+            if user_char == expected:
+                correct_count += 1
+                cell_data["frame"].configure(fg_color=COLORS["correct"])
+            else:
+                cell_data["frame"].configure(fg_color=COLORS["incorrect"])
 
-                    if user_char != "":
-                        total_filled_cells += 1
+        self._update_status_display(
+            correct_count, total_white_cells, total_filled_cells
+        )
 
-                    if user_char == expected:
-                        correct_count += 1
-                        self.grid_cells[(r, c)]["frame"].configure(
-                            fg_color=COLORS["correct"]
-                        )
-                    elif user_char != "":
-                        self.grid_cells[(r, c)]["frame"].configure(
-                            fg_color=COLORS["incorrect"]
-                        )
-
+    def _update_status_display(
+        self, correct_count: int, total_white_cells: int, total_filled_cells: int
+    ) -> None:
         if correct_count == total_white_cells:
             self.status_label.configure(
                 text="✓ Perfect! All answers correct.", text_color="#4ade80"
