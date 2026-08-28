@@ -192,86 +192,97 @@ class CrosswordUI:
         self.bind("<Key>", self._on_key_press)
         self.bind("<Escape>", lambda e: self.toggle_direction())
 
-    def _build_grid(self) -> None:
-        puzzle = PUZZLES[self.current_puzzle_idx]
-        rows = len(puzzle["grid"])
-        cols = len(puzzle["grid"][0])
-
-        self.grid_cells = {}
+    @staticmethod
+    def _calculate_clue_map(
+        puzzle: list[list[str]], rows: int, cols: int
+    ) -> dict[tuple[int, int], int]:
         clue_map: dict[tuple[int, int], int] = {}
         current_num = 1
 
         for r in range(rows):
             for c in range(cols):
-                if puzzle["grid"][r][c] == "B":
+                if puzzle[r][c] == "B":
                     continue
                 is_across_start = (
-                    (c == 0 or puzzle["grid"][r][c - 1] == "B")
+                    (c == 0 or puzzle[r][c - 1] == "B")
                     and c + 1 < cols
-                    and puzzle["grid"][r][c + 1] != "B"
+                    and puzzle[r][c + 1] != "B"
                 )
                 is_down_start = (
-                    (r == 0 or puzzle["grid"][r - 1][c] == "B")
+                    (r == 0 or puzzle[r - 1][c] == "B")
                     and r + 1 < rows
-                    and puzzle["grid"][r + 1][c] != "B"
+                    and puzzle[r + 1][c] != "B"
                 )
 
                 if is_across_start or is_down_start:
                     clue_map[(r, c)] = current_num
                     current_num += 1
 
+        return clue_map
+
+    def _create_cell_widget(
+        self, r: int, c: int, cell_type: str, clue_map: dict[tuple[int, int], int]
+    ) -> None:
+        cell_frame = ctk.CTkFrame(
+            self.grid_frame, corner_radius=0, width=42, height=42
+        )
+        cell_frame.grid(row=r, column=c, padx=1, pady=1)
+        cell_frame.grid_propagate(False)
+
+        if cell_type == "B":
+            cell_frame.configure(fg_color=COLORS["cell_B"])
+            return
+        cell_frame.configure(fg_color=COLORS["cell_empty"])
+
+        if (r, c) in clue_map:
+            num_label = ctk.CTkLabel(
+                cell_frame,
+                text=str(clue_map[(r, c)]),
+                font=("Helvetica", 10, "bold"),
+                text_color=COLORS["text_muted"],
+            )
+            num_label.place(x=3, y=1)
+
+        var = tk.StringVar()
+        self.string_vars[(r, c)] = var
+        entry = ctk.CTkEntry(
+            cell_frame,
+            font=("Helvetica", 18, "bold"),
+            justify="center",
+            textvariable=var,
+            border_width=0,
+            fg_color="transparent",
+            text_color=COLORS["text_main"],
+            corner_radius=0,
+        )
+        entry.place(
+            relx=0.5, rely=0.55, anchor="center", relwidth=1.0, relheight=0.8
+        )
+
+        entry.bind(
+            "<FocusIn>", lambda e, row=r, col=c: self.on_cell_focus(row, col)
+        )
+        entry.bind("<Key>", self._on_entry_key_press)
+        entry.bind("<KeyPress>", lambda e: self.status_label.configure(text=""))
+
+        self.grid_cells[(r, c)] = {
+            "entry": entry,
+            "frame": cell_frame,
+            "row": r,
+            "col": c,
+        }
+
+    def _build_grid(self) -> None:
+        puzzle_data = PUZZLES[self.current_puzzle_idx]["grid"]
+        rows = len(puzzle_data)
+        cols = len(puzzle_data[0])
+
+        self.grid_cells = {}
+        clue_map = self._calculate_clue_map(puzzle_data, rows, cols)
+
         for r in range(rows):
             for c in range(cols):
-                cell_type = puzzle["grid"][r][c]
-
-                cell_frame = ctk.CTkFrame(
-                    self.grid_frame, corner_radius=0, width=42, height=42
-                )
-                cell_frame.grid(row=r, column=c, padx=1, pady=1)
-                cell_frame.grid_propagate(False)
-
-                if cell_type == "B":
-                    cell_frame.configure(fg_color=COLORS["cell_B"])
-                else:
-                    cell_frame.configure(fg_color=COLORS["cell_empty"])
-
-                if (r, c) in clue_map:
-                    num_label = ctk.CTkLabel(
-                        cell_frame,
-                        text=str(clue_map[(r, c)]),
-                        font=("Helvetica", 10, "bold"),
-                        text_color=COLORS["text_muted"],
-                    )
-                    num_label.place(x=3, y=1)
-
-                var = tk.StringVar()
-                self.string_vars[(r, c)] = var
-                entry = ctk.CTkEntry(
-                    cell_frame,
-                    font=("Helvetica", 18, "bold"),
-                    justify="center",
-                    textvariable=var,
-                    border_width=0,
-                    fg_color="transparent",
-                    text_color=COLORS["text_main"],
-                    corner_radius=0,
-                )
-                entry.place(
-                    relx=0.5, rely=0.55, anchor="center", relwidth=1.0, relheight=0.8
-                )
-
-                entry.bind(
-                    "<FocusIn>", lambda e, row=r, col=c: self.on_cell_focus(row, col)
-                )
-                entry.bind("<Key>", self._on_entry_key_press)
-                entry.bind("<KeyPress>", lambda e: self.status_label.configure(text=""))
-
-                self.grid_cells[(r, c)] = {
-                    "entry": entry,
-                    "frame": cell_frame,
-                    "row": r,
-                    "col": c,
-                }
+                self._create_cell_widget(r, c, puzzle_data[r][c], clue_map)
 
         self.clue_number_map = clue_map
 
