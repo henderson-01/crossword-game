@@ -50,8 +50,11 @@ class TestPuzzleDataIntegrity:
                             f"Puzzle {i} ({r},{c}): Grid is 'B' but Solution is '{sol_char}'"
                         )
                     else:
-                        assert sol_char.isalpha() and sol_char.isupper(), (
-                            f"Puzzle {i} ({r},{c}): Solution '{sol_char}' is not an uppercase letter"
+                        assert sol_char.isalpha(), (
+                            f"Puzzle {i} ({r},{c}): Solution '{sol_char}' is not a letter"
+                        )
+                        assert sol_char.isupper(), (
+                            f"Puzzle {i} ({r},{c}): Solution '{sol_char}' is not uppercase"
                         )
 
     def test_clues_are_valid(self):
