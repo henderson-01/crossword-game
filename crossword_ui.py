@@ -231,8 +231,8 @@ class CrosswordUI:
 
         if cell_type == "B":
             cell_frame.configure(fg_color=COLORS["cell_B"])
-        else:
-            cell_frame.configure(fg_color=COLORS["cell_empty"])
+            return
+        cell_frame.configure(fg_color=COLORS["cell_empty"])
 
         if (r, c) in clue_map:
             num_label = ctk.CTkLabel(
